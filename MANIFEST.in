@@ -1,0 +1,15 @@
+include LICENSE
+include README.md
+include requirements.txt
+include pyproject.toml
+include setup.py
+
+recursive-include src *.py
+recursive-include data *
+recursive-include debian *
+recursive-include snap *
+recursive-include tests *.py
+
+global-exclude __pycache__
+global-exclude *.py[cod]
+global-exclude .git*

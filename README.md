@@ -55,7 +55,49 @@ MSR605X Utility è un'alternativa open source all'utility Windows per il lettore
 
 ## Installazione
 
-### Metodo 1: Installazione Rapida
+### Metodo 1: Pacchetto Debian (.deb) - Consigliato
+
+Il modo più semplice per installare l'applicazione su Ubuntu/Debian:
+
+```bash
+# Scarica il pacchetto .deb dalla pagina Releases
+wget https://github.com/Sam4000133/msr605x-ubuntu/releases/latest/download/msr605x-utility_1.0.0-1_all.deb
+
+# Installa il pacchetto
+sudo dpkg -i msr605x-utility_1.0.0-1_all.deb
+
+# Installa eventuali dipendenze mancanti
+sudo apt-get install -f
+```
+
+Dopo l'installazione, l'applicazione sarà disponibile nel menu applicazioni.
+
+### Metodo 2: Ubuntu Software Center (Snap)
+
+Installa direttamente da Ubuntu Software Center o via terminale:
+
+```bash
+# Installa da Snap Store (quando disponibile)
+sudo snap install msr605x-utility
+
+# Abilita l'accesso al dispositivo USB
+sudo snap connect msr605x-utility:raw-usb
+```
+
+Oppure installa da file .snap locale:
+
+```bash
+# Scarica il pacchetto .snap dalla pagina Releases
+wget https://github.com/Sam4000133/msr605x-ubuntu/releases/latest/download/msr605x-utility_1.0.0_amd64.snap
+
+# Installa il pacchetto
+sudo snap install msr605x-utility_1.0.0_amd64.snap --dangerous
+
+# Abilita l'accesso al dispositivo USB
+sudo snap connect msr605x-utility:raw-usb
+```
+
+### Metodo 3: Script di Installazione
 
 ```bash
 # Clona il repository
@@ -67,7 +109,7 @@ chmod +x install.sh
 sudo ./install.sh
 ```
 
-### Metodo 2: Installazione Manuale
+### Metodo 4: Installazione Manuale
 
 #### 1. Installa le dipendenze di sistema
 
@@ -271,6 +313,62 @@ sudo apt install gir1.2-gtk-4.0 gir1.2-adw-1
 - Striscia la carta a velocità costante
 - Verifica che la carta non sia danneggiata
 - Prova a cambiare la coercività nelle impostazioni
+
+## Compilazione Pacchetti
+
+Se vuoi compilare i pacchetti da solo invece di scaricarli:
+
+### Compilare il pacchetto .deb
+
+```bash
+# Installa le dipendenze di build
+sudo apt install build-essential debhelper dh-python python3-all python3-setuptools devscripts
+
+# Clona il repository
+git clone https://github.com/Sam4000133/msr605x-ubuntu.git
+cd msr605x-ubuntu
+
+# Compila il pacchetto
+dpkg-buildpackage -us -uc -b
+
+# Il pacchetto sarà in ../msr605x-utility_*.deb
+```
+
+### Compilare il pacchetto Snap
+
+```bash
+# Installa snapcraft
+sudo apt install snapcraft
+
+# Clona il repository
+git clone https://github.com/Sam4000133/msr605x-ubuntu.git
+cd msr605x-ubuntu
+
+# Compila lo snap
+snapcraft
+
+# Il pacchetto sarà in ./msr605x-utility_*.snap
+```
+
+### Script di Build Automatico
+
+Usa lo script incluso per compilare facilmente:
+
+```bash
+# Compila entrambi i formati
+./build-packages.sh --all
+
+# Compila solo .deb
+./build-packages.sh --deb
+
+# Compila solo Snap
+./build-packages.sh --snap
+
+# Pulisci i file di build
+./build-packages.sh --clean
+```
+
+I pacchetti compilati saranno nella cartella `dist/`.
 
 ## Sviluppo
 

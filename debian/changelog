@@ -1,0 +1,13 @@
+msr605x-utility (1.0.0-1) unstable; urgency=medium
+
+  * Initial release.
+  * Features:
+    - Read/Write/Erase magnetic stripe cards
+    - ISO, AAMVA, Raw data format support
+    - Coercivity, BPI, BPC configuration
+    - JSON/CSV file save/load
+    - GTK4/libadwaita modern interface
+    - Device diagnostic tests
+    - udev rules for non-root access
+
+ -- Samuele Quaranta <samuelequaranta@example.com>  Wed, 01 Jan 2026 12:00:00 +0100
