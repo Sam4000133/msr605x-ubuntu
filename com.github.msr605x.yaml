@@ -1,0 +1,46 @@
+app-id: com.github.msr605x
+runtime: org.gnome.Platform
+runtime-version: '45'
+sdk: org.gnome.Sdk
+command: msr605x-gui
+
+finish-args:
+  # GUI access
+  - --share=ipc
+  - --socket=fallback-x11
+  - --socket=wayland
+  # USB device access
+  - --device=all
+  # File access for saving/loading card data
+  - --filesystem=home
+
+modules:
+  - name: hidapi
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
+    sources:
+      - type: archive
+        url: https://github.com/libusb/hidapi/archive/refs/tags/hidapi-0.14.0.tar.gz
+        sha256: a5714234abe6e1f53647571c004e39bf2fddcc6dbb5dcf6815a6d0c4e3a4a354
+
+  - name: python3-hidapi
+    buildsystem: simple
+    build-commands:
+      - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}"
+        --prefix=${FLATPAK_DEST} hidapi
+    sources:
+      - type: file
+        url: https://files.pythonhosted.org/packages/source/h/hidapi/hidapi-0.14.0.post2.tar.gz
+        sha256: 8d3be666f464347022e2b47caf9132287885d9eacc7895314fc8cb48d4f42892
+
+  - name: msr605x
+    buildsystem: simple
+    build-commands:
+      - pip3 install --verbose --exists-action=i --no-index --prefix=${FLATPAK_DEST} .
+      - install -Dm644 data/com.github.msr605x.desktop ${FLATPAK_DEST}/share/applications/com.github.msr605x.desktop
+      - install -Dm644 data/com.github.msr605x.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/com.github.msr605x.svg
+      - install -Dm644 data/style.css ${FLATPAK_DEST}/share/msr605x/style.css
+    sources:
+      - type: dir
+        path: .

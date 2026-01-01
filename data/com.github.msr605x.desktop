@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=MSR605X Utility
+Comment=Read, write and manage magnetic stripe cards
+Exec=msr605x-gui
+Icon=com.github.msr605x
+Terminal=false
+Type=Application
+Categories=Utility;System;
+Keywords=magnetic;stripe;card;reader;writer;msr605x;
+StartupNotify=true
+StartupWMClass=com.github.msr605x

@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "msr605x-ubuntu"
+version = "1.0.0"
+description = "MSR605X Magnetic Stripe Card Reader/Writer utility for Ubuntu"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Samuele Quaranta"}
+]
+requires-python = ">=3.10"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: X11 Applications :: GTK",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Utilities",
+]
+keywords = ["msr605x", "magnetic", "stripe", "card", "reader", "writer", "gtk"]
+dependencies = [
+    "PyGObject>=3.44.0",
+    "hidapi>=0.14.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/samuelequaranta/msr605x-ubuntu"
+Repository = "https://github.com/samuelequaranta/msr605x-ubuntu"
+Issues = "https://github.com/samuelequaranta/msr605x-ubuntu/issues"
+
+[project.scripts]
+msr605x = "src.main:main"
+
+[project.gui-scripts]
+msr605x-gui = "src.main:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
+[tool.black]
+line-length = 100
+target-version = ['py310']
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"

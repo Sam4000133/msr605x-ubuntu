@@ -1,0 +1,116 @@
+/* MSR605X Utility - Custom GTK4 Styles */
+
+/* Track entries */
+.track-entry {
+    font-family: "JetBrains Mono", "Fira Code", "Source Code Pro", monospace;
+    font-size: 14px;
+    padding: 8px 12px;
+}
+
+.track-label {
+    font-weight: bold;
+    font-size: 12px;
+}
+
+/* Status indicators */
+.status-connected {
+    color: @success_color;
+    font-weight: bold;
+}
+
+.status-disconnected {
+    color: @error_color;
+}
+
+/* LED indicators */
+.led-indicator {
+    min-width: 14px;
+    min-height: 14px;
+    border-radius: 7px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.led-green {
+    background: linear-gradient(135deg, #6BCB77 0%, #4CAF50 100%);
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
+}
+
+.led-yellow {
+    background: linear-gradient(135deg, #FFD93D 0%, #FFC107 100%);
+    box-shadow: 0 0 8px rgba(255, 193, 7, 0.6);
+}
+
+.led-red {
+    background: linear-gradient(135deg, #FF6B6B 0%, #F44336 100%);
+    box-shadow: 0 0 8px rgba(244, 67, 54, 0.6);
+}
+
+.led-off {
+    background: linear-gradient(135deg, #888888 0%, #666666 100%);
+    box-shadow: none;
+}
+
+/* Log view */
+.log-view {
+    font-family: "JetBrains Mono", "Fira Code", monospace;
+    font-size: 11px;
+    padding: 8px;
+    background-color: @view_bg_color;
+}
+
+/* Panel titles */
+.panel-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+/* Action buttons */
+.action-button {
+    min-height: 42px;
+    min-width: 120px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Warning box */
+.warning {
+    padding: 12px;
+    border-radius: 8px;
+    background-color: alpha(@warning_color, 0.15);
+    border: 1px solid alpha(@warning_color, 0.3);
+    margin: 8px 0;
+}
+
+/* Success/error styles for entries */
+entry.success {
+    border-color: @success_color;
+}
+
+entry.error {
+    border-color: @error_color;
+}
+
+/* Frame styling */
+frame > label {
+    font-weight: bold;
+    font-size: 13px;
+}
+
+/* Navigation sidebar */
+.sidebar togglebutton {
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin: 2px 0;
+}
+
+.sidebar togglebutton:checked {
+    background-color: alpha(@accent_bg_color, 0.3);
+}
+
+/* Spinner */
+spinner {
+    min-width: 32px;
+    min-height: 32px;
+}
