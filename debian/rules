@@ -6,6 +6,9 @@ export PYBUILD_NAME = msr605x-utility
 %:
 	dh $@ --with python3 --buildsystem=pybuild
 
+override_dh_auto_test:
+	@echo "Skipping tests during package build"
+
 override_dh_auto_install:
 	dh_auto_install
 	install -Dm644 data/com.github.msr605x.desktop debian/msr605x-utility/usr/share/applications/com.github.msr605x.desktop

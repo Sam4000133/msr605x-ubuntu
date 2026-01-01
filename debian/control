@@ -6,8 +6,7 @@ Build-Depends: debhelper-compat (= 13),
                dh-python,
                python3-all,
                python3-setuptools,
-               python3-gi,
-               python3-hid
+               python3-gi
 Standards-Version: 4.6.0
 Homepage: https://github.com/Sam4000133/msr605x-ubuntu
 Vcs-Browser: https://github.com/Sam4000133/msr605x-ubuntu
@@ -23,7 +22,7 @@ Depends: ${python3:Depends},
          gir1.2-gtk-4.0,
          gir1.2-adw-1,
          libhidapi-hidraw0
-Recommends: python3-hid
+Recommends: python3-pip
 Description: MSR605X Magnetic Stripe Card Reader/Writer Utility
  A native GTK4 application for Ubuntu to read, write, and manage
  magnetic stripe cards using the MSR605X device.
