@@ -36,8 +36,7 @@ setup(
         "Topic :: Utilities",
         "Topic :: System :: Hardware",
     ],
-    packages=find_packages(include=["src", "src.*"]),
-    package_dir={"": "."},
+    packages=["src", "src.msr605x", "src.ui", "src.utils"],
     python_requires=">=3.10",
     install_requires=[
         "PyGObject>=3.44.0",

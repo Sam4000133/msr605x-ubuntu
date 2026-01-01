@@ -1,0 +1,23 @@
+# Set default behavior to automatically normalize line endings
+* text=auto
+
+# Force LF for shell scripts and makefiles (required for Linux)
+*.sh text eol=lf
+debian/rules text eol=lf
+debian/postinst text eol=lf
+debian/postrm text eol=lf
+install.sh text eol=lf
+build-packages.sh text eol=lf
+
+# Force LF for Python files
+*.py text eol=lf
+
+# Force LF for YAML files
+*.yaml text eol=lf
+*.yml text eol=lf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.ico binary
+*.svg binary

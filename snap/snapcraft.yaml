@@ -5,7 +5,7 @@ description: |
   A native GTK4 application for Ubuntu to read, write, and manage
   magnetic stripe cards using the MSR605X device.
 
-  **Features:**
+  Features:
   - Read/Write/Erase magnetic stripe cards
   - Support for ISO, AAMVA, and Raw data formats
   - Hi-Co and Lo-Co coercivity configuration
@@ -14,12 +14,12 @@ description: |
   - Modern GTK4/libadwaita interface
   - Device diagnostic tests
 
-  **Supported Hardware:**
+  Supported Hardware:
   - MSR605X USB Magnetic Stripe Card Reader/Writer
   - Compatible MSR605/MSR606 devices
 
-  **Note:** After installation, you may need to connect the raw-usb interface:
-  `sudo snap connect msr605x-utility:raw-usb`
+  Note: After installation, connect the raw-usb interface with
+  sudo snap connect msr605x-utility:raw-usb
 
 grade: stable
 confinement: strict
@@ -30,8 +30,8 @@ architectures:
 
 apps:
   msr605x-utility:
-    command: usr/bin/msr605x-gui
-    desktop: usr/share/applications/com.github.msr605x.desktop
+    command: bin/msr605x-launcher
+    desktop: share/applications/com.github.msr605x.desktop
     extensions: [gnome]
     plugs:
       - home
@@ -39,10 +39,11 @@ apps:
       - hardware-observe
     environment:
       GTK_USE_PORTAL: '1'
+      PYTHONPATH: $SNAP/lib/python3.10/site-packages:$SNAP/usr/lib/python3/dist-packages
 
 layout:
   /usr/share/msr605x:
-    bind: $SNAP/usr/share/msr605x
+    bind: $SNAP/share/msr605x
 
 parts:
   msr605x-utility:
@@ -58,22 +59,26 @@ parts:
       - gir1.2-adw-1
     override-build: |
       craftctl default
+
       # Install desktop file
-      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/applications
-      cp data/com.github.msr605x.desktop $SNAPCRAFT_PART_INSTALL/usr/share/applications/
+      mkdir -p $SNAPCRAFT_PART_INSTALL/share/applications
+      cp data/com.github.msr605x.desktop $SNAPCRAFT_PART_INSTALL/share/applications/
+
       # Install icon
-      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/icons/hicolor/scalable/apps
-      cp data/com.github.msr605x.svg $SNAPCRAFT_PART_INSTALL/usr/share/icons/hicolor/scalable/apps/
+      mkdir -p $SNAPCRAFT_PART_INSTALL/share/icons/hicolor/scalable/apps
+      cp data/com.github.msr605x.svg $SNAPCRAFT_PART_INSTALL/share/icons/hicolor/scalable/apps/
+
       # Install CSS
-      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/msr605x
-      cp data/style.css $SNAPCRAFT_PART_INSTALL/usr/share/msr605x/
+      mkdir -p $SNAPCRAFT_PART_INSTALL/share/msr605x
+      cp data/style.css $SNAPCRAFT_PART_INSTALL/share/msr605x/
+
       # Create launcher script
-      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/bin
-      cat > $SNAPCRAFT_PART_INSTALL/usr/bin/msr605x-gui << 'EOF'
-      #!/bin/bash
-      exec python3 -m src.main "$@"
-      EOF
-      chmod +x $SNAPCRAFT_PART_INSTALL/usr/bin/msr605x-gui
+      mkdir -p $SNAPCRAFT_PART_INSTALL/bin
+      cat > $SNAPCRAFT_PART_INSTALL/bin/msr605x-launcher << 'LAUNCHER'
+#!/bin/bash
+exec python3 -m src.main "$@"
+LAUNCHER
+      chmod +x $SNAPCRAFT_PART_INSTALL/bin/msr605x-launcher
 
 plugs:
   raw-usb:

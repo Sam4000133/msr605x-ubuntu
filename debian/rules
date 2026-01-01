@@ -8,18 +8,10 @@ export PYBUILD_NAME = msr605x-utility
 
 override_dh_auto_install:
 	dh_auto_install
-	# Install desktop file
-	install -Dm644 data/com.github.msr605x.desktop \
-		debian/msr605x-utility/usr/share/applications/com.github.msr605x.desktop
-	# Install icon
-	install -Dm644 data/com.github.msr605x.svg \
-		debian/msr605x-utility/usr/share/icons/hicolor/scalable/apps/com.github.msr605x.svg
-	# Install udev rules
-	install -Dm644 data/99-msr605x.rules \
-		debian/msr605x-utility/lib/udev/rules.d/99-msr605x.rules
-	# Install CSS
-	install -Dm644 data/style.css \
-		debian/msr605x-utility/usr/share/msr605x/style.css
+	install -Dm644 data/com.github.msr605x.desktop debian/msr605x-utility/usr/share/applications/com.github.msr605x.desktop
+	install -Dm644 data/com.github.msr605x.svg debian/msr605x-utility/usr/share/icons/hicolor/scalable/apps/com.github.msr605x.svg
+	install -Dm644 data/99-msr605x.rules debian/msr605x-utility/lib/udev/rules.d/99-msr605x.rules
+	install -Dm644 data/style.css debian/msr605x-utility/usr/share/msr605x/style.css
 
 override_dh_installchangelogs:
 	dh_installchangelogs
