@@ -28,7 +28,6 @@ jobs:
             python3-all \
             python3-setuptools \
             python3-gi \
-            python3-hid \
             devscripts \
             fakeroot
 
