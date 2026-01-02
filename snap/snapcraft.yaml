@@ -7,18 +7,16 @@ description: |
 
   Features:
   - Read/Write/Erase magnetic stripe cards
-  - Support for ISO, AAMVA, and Raw data formats
+  - Automatic device detection and connection
+  - Support for ISO and Raw data formats
   - Hi-Co and Lo-Co coercivity configuration
-  - BPI and BPC settings per track
   - Save/Load card data in JSON/CSV format
   - Modern GTK4/libadwaita interface
-  - Device diagnostic tests
 
   Supported Hardware:
   - MSR605X USB Magnetic Stripe Card Reader/Writer
-  - Compatible MSR605/MSR606 devices
 
-  Note: After installation, connect the raw-usb interface with
+  Note: After installation, connect the raw-usb interface with:
   sudo snap connect msr605x-utility:raw-usb
 
 grade: stable
@@ -26,29 +24,32 @@ confinement: strict
 base: core22
 
 architectures:
-  - build-on: amd64
+  - build-on: [amd64]
+    build-for: [amd64]
 
 apps:
   msr605x-utility:
-    command: bin/msr605x-launcher
-    desktop: share/applications/com.github.msr605x.desktop
+    command: usr/bin/python3 -m src.main
+    desktop: usr/share/applications/com.github.msr605x.desktop
     extensions: [gnome]
     plugs:
       - home
       - raw-usb
       - hardware-observe
     environment:
-      GTK_USE_PORTAL: '1'
-      PYTHONPATH: $SNAP/lib/python3.10/site-packages:$SNAP/usr/lib/python3/dist-packages
+      PYTHONPATH: $SNAP/usr/lib/python3/dist-packages:$SNAP/lib/python3.10/site-packages
 
-layout:
-  /usr/share/msr605x:
-    bind: $SNAP/share/msr605x
+plugs:
+  raw-usb:
+  hardware-observe:
 
 parts:
   msr605x-utility:
     plugin: python
     source: .
+    build-packages:
+      - python3-dev
+      - libhidapi-dev
     python-packages:
       - hidapi
     stage-packages:
@@ -57,31 +58,13 @@ parts:
       - python3-gi-cairo
       - gir1.2-gtk-4.0
       - gir1.2-adw-1
-    override-build: |
-      craftctl default
+      - libgtk-4-1
+      - libadwaita-1-0
 
-      # Install desktop file
-      mkdir -p $SNAPCRAFT_PART_INSTALL/share/applications
-      cp data/com.github.msr605x.desktop $SNAPCRAFT_PART_INSTALL/share/applications/
-
-      # Install icon
-      mkdir -p $SNAPCRAFT_PART_INSTALL/share/icons/hicolor/scalable/apps
-      cp data/com.github.msr605x.svg $SNAPCRAFT_PART_INSTALL/share/icons/hicolor/scalable/apps/
-
-      # Install CSS
-      mkdir -p $SNAPCRAFT_PART_INSTALL/share/msr605x
-      cp data/style.css $SNAPCRAFT_PART_INSTALL/share/msr605x/
-
-      # Create launcher script
-      mkdir -p $SNAPCRAFT_PART_INSTALL/bin
-      cat > $SNAPCRAFT_PART_INSTALL/bin/msr605x-launcher << 'LAUNCHER'
-#!/bin/bash
-exec python3 -m src.main "$@"
-LAUNCHER
-      chmod +x $SNAPCRAFT_PART_INSTALL/bin/msr605x-launcher
-
-plugs:
-  raw-usb:
-    interface: raw-usb
-  hardware-observe:
-    interface: hardware-observe
+  desktop-files:
+    plugin: dump
+    source: data/
+    organize:
+      com.github.msr605x.desktop: usr/share/applications/com.github.msr605x.desktop
+      com.github.msr605x.svg: usr/share/icons/hicolor/scalable/apps/com.github.msr605x.svg
+      style.css: usr/share/msr605x/style.css
